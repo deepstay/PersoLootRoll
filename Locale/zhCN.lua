@@ -28,6 +28,10 @@ L["MSG_ROLL_WINNER"] = "<%s> 已贏得 %s -> 请跟我交易！"
 L["MSG_ROLL_WINNER_MASTERLOOT"] = "<%1$s> 已贏得由<%3$s>提供的 %2$s -> 请交易 %4$s！"
 L["MSG_ROLL_WINNER_WHISPER"] = "你已经贏得 %s！请跟我交易。"
 L["MSG_ROLL_WINNER_WHISPER_MASTERLOOT"] = "你已贏得由<%2$s>提供的 %1$s！请交易 %3$s。"
+L["MSG_ROLL_DISENCHANT"] = "<%s> 将被分解 %s -> 交易我!"
+L["MSG_ROLL_DISENCHANT_MASTERLOOT"] = "<%s>将被分解 %s 由 <%s>提供 -> 交易 %s!"
+L["MSG_ROLL_DISENCHANT_WHISPER"] = "你被选定来分解 %s, 请交易我。"
+L["MSG_ROLL_DISENCHANT_WHISPER_MASTERLOOT"] = "你被选定来分解 %s 由 <%s>提供，请交易 %s。"
 
 -- Addon
 local L = LibStub("AceLocale-3.0"):NewLocale(Name, lang, lang == Locale.FALLBACK)
@@ -92,7 +96,7 @@ L["HELP"] = [=[开始物品的掷骰或竞标（/PersoLootRoll or /plr）。
 使用方法：
 /plr: 开启选项视窗
 /plr roll [物品]* (<持续时间> <拥有者>): 开始一个或多个物品的掷骰
-/plr bid <拥有者> ([物品]): 竞标来自其他玩家的物品
+/plr bid [物品] (<拥有者> <bid>): 竞标来自其他玩家的物品
 /plr options: 开启选项视窗
 /plr config: 透过指令更改设置
 /plr help: 发送此帮助讯息
@@ -105,7 +109,7 @@ L["ERROR_CMD_UNKNOWN"] = "未知指令'%s'"
 L["ERROR_ITEM_NOT_TRADABLE"] = "你无法交易这项物品。"
 L["ERROR_NOT_IN_GROUP"] = "你不在队伍或团队中。"
 L["ERROR_OPT_MASTERLOOT_EXPORT_FAILED"] = "汇出分装设置到<%s>失败了！"
-L["ERROR_PLAYER_NOT_FOUND"] = "找不到玩家 %s。"
+L["ERROR_PLAYER_NOT_FOUND"] = "找不到玩家 %q。"
 L["ERROR_ROLL_BID_IMPOSSIBLE_OTHER"] = "%s已发送了%s的竞标，但现在不允许这样做。"
 L["ERROR_ROLL_BID_IMPOSSIBLE_SELF"] = "你现在无法竞标该物品。"
 L["ERROR_ROLL_BID_UNKNOWN_OTHER"] = "%s已发送了%s的竞标邀请。"
@@ -115,6 +119,8 @@ L["ERROR_ROLL_STATUS_NOT_1"] = "此掷骰没有运行。"
 L["ERROR_ROLL_UNKNOWN"] = "此掷骰不存在。"
 L["ERROR_ROLL_VOTE_IMPOSSIBLE_OTHER"] = "%s已经发送了%s的投票表決，但现在不允许这样做。"
 L["ERROR_ROLL_VOTE_IMPOSSIBLE_SELF"] = "你现在无法对该物品进行投票。"
+L["ERROR_NOT_MASTERLOOTER_OTHER_OWNER"] = "你需要有拾取分配权才能为其他玩家的物品创建掷骰。" 
+L["ERROR_NOT_MASTERLOOTER_TIMEOUT"] = "当你没有拾取分配权时，你无法改变掷骰时间。" 
 
 -- GUI
 L["DIALOG_MASTERLOOT_ASK"] = "<%s>想成为你的分装者。"
@@ -138,7 +144,7 @@ L["MENU_MASTERLOOT_START"] = "成为分装者"
 L["TIP_ADDON_MISSING"] = "插件缺少："
 L["TIP_ADDON_VERSIONS"] = "插件版本："
 L["TIP_ENABLE_WHISPER_ASK"] = "提示：右键点击启用战利品自动询问"
-L["TIP_CHAT_TO_TRADE"] = "请在交易前先询问提供者" -- Translation missing
+L["TIP_CHAT_TO_TRADE"] = "请在交易前先询问提供者"
 L["TIP_MASTERLOOT"] = "队长分配是启用的"
 L["TIP_MASTERLOOT_INFO"] = [=[|cffffff00分裝者:|r %s 
 |cffffff00掷骰时间:|r %ds (+ %ds 每项物品) 
@@ -158,17 +164,27 @@ L["OPT_ACTIONS_WINDOW"] = "显示动作视窗"
 L["OPT_ACTIONS_WINDOW_DESC"] = "当有处理中的动作时显示动作窗口，例如，当你赢得一件物品但还需要交易某人才能得到它。"
 L["OPT_ACTIONS_WINDOW_MOVE"] = "移动"
 L["OPT_ACTIONS_WINDOW_MOVE_DESC"] = "移动动作窗口到一旁。"
+L["OPT_ALLOW_DISENCHANT"] = "允许“分解”性竞骰。"
+L["OPT_ALLOW_DISENCHANT_DESC"] = "允许其他人对你所提供的拥有物品申请“分解”性竞骰。"
 L["OPT_AUTHOR"] = "|cffffff00作者:|r Shrugal (EU-Mal'Ganis)"
 L["OPT_AWARD_SELF"] = "自行选择你的物品的获胜者"
 L["OPT_AWARD_SELF_DESC"] = "自行选择谁该得到你的战利品，而非让插件随机选择，当你是拾取分配者时，始终启用此功能。"
 L["OPT_BID_PUBLIC"] = "公开竞标"
 L["OPT_BID_PUBLIC_DESC"] = "你掷骰的竞标是公开的，所有使用此插件的人都可以看见。"
+L["OPT_CHILL_MODE"] = "免打扰模式"
+L["OPT_CHILL_MODE_DESC"] = [=[开启免打扰模式的目的是为了不花费更多的时间用于协商战利品的分配。 如果启用它，以下内容将会更改：
+
+|cffffff781.|r 在你真正决定分配它们之前，你有足够的时间评估，因此不会开启掷骰，而插件的其他玩家在你做决定之前不会看到你对物品有关的竞骰。
+|cffffff782.|r 如果你选择了自己赢得物品，那么你有双倍的默认设定时间，或者根本没有时间限制。（参见下一个选项）。
+|cffffff783.|r 你队伍里非插件的玩家掷骰也将维持保留状态，直到你决定是否自己需要它们为止。
+
+|cffff0000重要:|r 在没有开启免打扰模式的情况下，其他插件的玩家掷骰仍将具有正常的默认时间。 如果您想运行免打扰模式，请确保队伍中的每个人都启用此选项。]=]
 L["OPT_DONT_SHARE"] = "不分享战利品"
 L["OPT_DONT_SHARE_DESC"] = "不去ROLL别人的战利品但也不分享自己的。此插件将会阻挡对你战利品的请求(如果启用的话)，但你仍可以成为分装者以及战利品议会成员。"
 L["OPT_ENABLE"] = "启用"
 L["OPT_ENABLE_DESC"] = "启用或停用此插件"
 L["OPT_ACTIVE_GROUPS"] = "按照小队类型激活"
-L["OPT_ACTIVE_GROUPS_DESC"] = [=[Activate only when you are in one of these group types.
+L["OPT_ACTIVE_GROUPS_DESC"] = [=[仅当你在此队伍中时才激活。
 
 |cffffff78公会团队：|r团队的%d%%或更多的成员是来自一个公会。
 |cffffff78社群團隊：|r团队的%d%%或更多的成员是来自一个魔兽社群。]=]
@@ -194,9 +210,11 @@ L["OPT_ROLLS_WINDOW"] = "显示ROLL窗口"
 L["OPT_ROLLS_WINDOW_DESC"] = "当某人拾取你感兴趣的战利品时总是显示ROLL窗口(所有的ROLL都在上面)。当你是分装者时，始终启用此功能。"
 L["OPT_SPECS"] = "专精"
 L["OPT_SPECS_DESC"] = "只建议这些职业专精的战利品。"
-L["OPT_TRANSLATION"] = "|cffffff00翻译:|r 不懂英文 (CN-新手学习)"
+L["OPT_TRANSLATION"] = "|cffffff00翻译:|r 蚂蚁搬大象"
 L["OPT_TRANSMOG"] = "检查幻化外观"
 L["OPT_TRANSMOG_DESC"] = "ROLL那些你还未拥有外观的物品。"
+L["OPT_DISENCHANT"] = "分解"
+L["OPT_DISENCHANT_DESC"] = "如果你有“附魔”专业，并且物品所有者允许，则可以对你无法使用的物品竞骰“分解”。"
 L["OPT_UI"] = "使用者界面"
 L["OPT_UI_DESC"] = "根据自己的喜好自订persolootroll的外观。"
 L["OPT_VERSION"] = "|cffffff00版本:|r "
@@ -242,8 +260,9 @@ L["OPT_MASTERLOOT_RULES_AUTO_AWARD_TIMEOUT_PER_ITEM_DESC"] = "将每个掉落的
 L["OPT_MASTERLOOT_RULES_BID_PUBLIC"] = "公开竞标"
 L["OPT_MASTERLOOT_RULES_BID_PUBLIC_DESC"] = "你可以公开竞标，这样每个人都可以看到谁出价。"
 L["OPT_MASTERLOOT_RULES_DESC"] = "当你是分装者时，这些选项适用于每个人。"
+L["OPT_MASTERLOOT_RULES_ALLOW_DISENCHANT_DESC"] = "允许队伍成员竞骰物品“分解”。"
 L["OPT_MASTERLOOT_RULES_DISENCHANTER"] = "分解者"
-L["OPT_MASTERLOOT_RULES_DISENCHANTER_DESC"] = "将没人要的战利品给这些玩家分解。"
+L["OPT_MASTERLOOT_RULES_DISENCHANTER_DESC"] = "将没人要的战利品给这些玩家分解。" 
 L["OPT_MASTERLOOT_RULES_GREED_ANSWERS"] = "自订 '贪婪' 的应答"
 L["OPT_MASTERLOOT_RULES_GREED_ANSWERS_DESC"] = [=[当掷骰'贪婪'时最多可依据优先等级指定9个自订回答。你还可以插入'%s'本身让优先级降低到先前回答之下。使用逗号分隔多个条目。
 
@@ -330,6 +349,20 @@ L["OPT_MSG_ROLL_WINNER_WHISPER_MASTERLOOT"] = "密语ROLL装获胜者 (如同队
 L["OPT_MSG_ROLL_WINNER_WHISPER_MASTERLOOT_DESC"] = [=[1：物品连接
 2：物品提供者
 3：他/她]=]
+L["OPT_MSG_ROLL_DISENCHANT"] = "通告分解者是谁。"
+L["OPT_MSG_ROLL_DISENCHANT_DESC"] = [=[1：分解者
+2：物品链接]=]
+L["OPT_MSG_ROLL_DISENCHANT_MASTERLOOT"] = "通告分解者（也是分装者）"
+L["OPT_MSG_ROLL_DISENCHANT_MASTERLOOT_DESC"] = [=[1：分解者
+2：物品链接
+3：物品提供者
+4：他/她]=]
+L["OPT_MSG_ROLL_DISENCHANT_WHISPER"] = "密语分解者"
+L["OPT_MSG_ROLL_DISENCHANT_WHISPER_DESC"] = "1：物品链接"
+L["OPT_MSG_ROLL_DISENCHANT_WHISPER_MASTERLOOT"] = "密语分解者（也是分装者）"
+L["OPT_MSG_ROLL_DISENCHANT_WHISPER_MASTERLOOT_DESC"] = [=[1：物品链接
+2：物品提供者
+3：他/她]=]
 L["OPT_SHOULD_CHAT"] = "启用/停用"
 L["OPT_SHOULD_CHAT_DESC"] = "决定插件何时发布到队伍/团队聊天并密语其他玩家。"
 L["OPT_WHISPER"] = "聊天密语"
@@ -349,6 +382,8 @@ L["OPT_WHISPER_SUPPRESS"] = "阻止询问"
 L["OPT_WHISPER_SUPPRESS_DESC"] = "当你放弃战利品时，阻止来自符合条件玩家的密语讯息。"
 L["OPT_WHISPER_TARGET"] = "询问目标"
 L["OPT_WHISPER_TARGET_DESC"] = "是否询问战利品取决于目标是否在你的公会或是魔兽社群或是好友名单上。"
+L["OPT_WHISPER_ASK_VARIANTS"] = "开启随机询问"
+L["OPT_WHISPER_ASK_VARIANTS_DESC"] = "询问战利品时使用不同的行（见以下），以减少重复性。"
 
 -- Roll
 L["BID_CHAT"] = "正在询问 %s 为了 %s -> %s。"
@@ -380,7 +415,8 @@ L["TRADE_START"] = "与 %s 开始交易。"
 
 -- Globals
 LOOT_ROLL_INELIGIBLE_REASONPLR_NO_ADDON = "物品的提供者并没有使用persolootroll插件。"
-LOOT_ROLL_INELIGIBLE_REASONPLR_NO_DISENCHANT = "persolootroll插件不支持附魔分解。"
+LOOT_ROLL_INELIGIBLE_REASONPLR_NO_DISENCHANT = "提供物品的玩家不允许“分解”性竞骰。"
+LOOT_ROLL_INELIGIBLE_REASONPLR_NOT_ENCHANTER = "你的角色专业中没有“附魔”。"
 
 -- Other
 L["ID"] = ID
