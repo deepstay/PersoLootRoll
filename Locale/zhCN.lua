@@ -37,15 +37,15 @@ L["MSG_ROLL_DISENCHANT_WHISPER_MASTERLOOT"] = "你被选定来分解 %s 由 <%s>
 local L = LibStub("AceLocale-3.0"):NewLocale(Name, lang, lang == Locale.FALLBACK)
 if not L then return end
 
-L["ACTION"] = "动作"
-L["ACTIONS"] = "动作"
+L["ACTION"] = "激活"
+L["ACTIONS"] = "操作"
 L["ADVERTISE"] = "在聊天频道发布讯息"
 L["ANSWER"] = "回答"
 L["ASK"] = "询问"
 L["AWARD"] = "分配"
 L["AWARD_LOOT"] = "分配装备/物品"
 L["AWARD_RANDOMLY"] = "随机分配"
-L["BID"] = "竞标"
+L["BID"] = "竞骰"
 L["COMMUNITY_GROUP"] = "社群队伍"
 L["COMMUNITY_MEMBER"] = "社群成员"
 L["DISABLED"] = "停用"
@@ -86,13 +86,13 @@ L["UP"] = "上"
 L["VERSION_NOTICE"] = "插件已经有新的版本，请更新以保持跟所有人的相容性，才不会错过任何战利品！"
 L["VOTE"] = "表決"
 L["VOTE_WITHDRAW"] = "收回"
-L["VOTES"] = "表決"
+L["VOTES"] = "表決结果"
 L["WINNER"] = "获胜者"
 L["WON"] = "获胜"
-L["YOUR_BID"] = "你的竞标"
+L["YOUR_BID"] = "你的竞骰"
 
 -- Commands
-L["HELP"] = [=[开始物品的掷骰或竞标（/PersoLootRoll or /plr）。
+L["HELP"] = [=[开始物品的掷骰或竞骰（/PersoLootRoll or /plr）。
 使用方法：
 /plr: 开启选项视窗
 /plr roll [物品]* (<持续时间> <拥有者>): 开始一个或多个物品的掷骰
@@ -108,11 +108,11 @@ L["USAGE_ROLL"] = "使用：/plr roll [item]* (<持续时间> <提供者>)"
 L["ERROR_CMD_UNKNOWN"] = "未知指令'%s'"
 L["ERROR_ITEM_NOT_TRADABLE"] = "你无法交易这项物品。"
 L["ERROR_NOT_IN_GROUP"] = "你不在队伍或团队中。"
-L["ERROR_OPT_MASTERLOOT_EXPORT_FAILED"] = "汇出分装设置到<%s>失败了！"
+L["ERROR_OPT_MASTERLOOT_EXPORT_FAILED"] = "导出装备分配设置到<%s>失败了！"
 L["ERROR_PLAYER_NOT_FOUND"] = "找不到玩家 %q。"
-L["ERROR_ROLL_BID_IMPOSSIBLE_OTHER"] = "%s已发送了%s的竞标，但现在不允许这样做。"
-L["ERROR_ROLL_BID_IMPOSSIBLE_SELF"] = "你现在无法竞标该物品。"
-L["ERROR_ROLL_BID_UNKNOWN_OTHER"] = "%s已发送了%s的竞标邀请。"
+L["ERROR_ROLL_BID_IMPOSSIBLE_OTHER"] = "%s已发送了%s的竞骰，但现在不允许这样做。"
+L["ERROR_ROLL_BID_IMPOSSIBLE_SELF"] = "你现在无法竞骰该物品。"
+L["ERROR_ROLL_BID_UNKNOWN_OTHER"] = "%s已发送了%s的竞骰邀请。"
 L["ERROR_ROLL_BID_UNKNOWN_SELF"] = "这不是有效的竞标。"
 L["ERROR_ROLL_STATUS_NOT_0"] = "此掷骰已经开始或是结束。"
 L["ERROR_ROLL_STATUS_NOT_1"] = "此掷骰没有运行。"
@@ -123,16 +123,16 @@ L["ERROR_NOT_MASTERLOOTER_OTHER_OWNER"] = "你需要有拾取分配权才能为�
 L["ERROR_NOT_MASTERLOOTER_TIMEOUT"] = "当你没有拾取分配权时，你无法改变掷骰时间。" 
 
 -- GUI
-L["DIALOG_MASTERLOOT_ASK"] = "<%s>想成为你的分装者。"
-L["DIALOG_OPT_MASTERLOOT_LOAD"] = "这将用你公会/社群讯息中储存的设置替换你当前的分装设置，你确定要继续吗？"
-L["DIALOG_OPT_MASTERLOOT_SAVE"] = "这将使用您当前的设置替换公会/社群讯息中的任何分装设置，您确定要继续吗？"
+L["DIALOG_MASTERLOOT_ASK"] = "<%s>想成为你的装备分配者。"
+L["DIALOG_OPT_MASTERLOOT_LOAD"] = "这将用你公会/社群讯息中储存的设置替换你当前的装备分配设置，你确定要继续吗？"
+L["DIALOG_OPT_MASTERLOOT_SAVE"] = "这将使用您当前的设置替换公会/社群讯息中的任何装备分配设置，您确定要继续吗？"
 L["DIALOG_ROLL_CANCEL"] = "你想要取消这次掷骰吗？"
 L["DIALOG_ROLL_RESTART"] = "你想要重新开始掷骰吗？"
-L["FILTER"] = "过滤"
+L["FILTER"] = "筛选"
 L["FILTER_ALL"] = "所有玩家"
 L["FILTER_ALL_DESC"] = "包含所有玩家的掷骰，并非只有你的或是你感兴趣的物品。"
 L["FILTER_AWARDED"] = "已取得"
-L["FILTER_AWARDED_DESC"] = "包含已经由其他人赢得的骰装。"
+L["FILTER_AWARDED_DESC"] = "包括团队中已经被其他人赢得的。"
 L["FILTER_DONE"] = "已完成"
 L["FILTER_DONE_DESC"] = "包含已经结束的掷骰。"
 L["FILTER_HIDDEN"] = "隐藏"
@@ -149,28 +149,28 @@ L["TIP_MASTERLOOT"] = "队长分配是启用的"
 L["TIP_MASTERLOOT_INFO"] = [=[|cffffff00分裝者:|r %s 
 |cffffff00掷骰时间:|r %ds (+ %ds 每项物品) 
 |cffffff00议会:|r %s |
-cffffff00竞标:|r %s 
-|cffffff00表決:|r %s]=]
+cffffff00竞骰:|r %s 
+|cffffff00表決结果:|r %s]=]
 L["TIP_MASTERLOOT_START"] = "成为或搜寻负责分装者"
 L["TIP_MASTERLOOT_STOP"] = "移除负责分装者"
 L["TIP_MASTERLOOTING"] = "有分装者的队伍:"
-L["TIP_MINIMAP_ICON"] = [=[|cffffff00左鍵:|r 开关骰装视窗 
+L["TIP_MINIMAP_ICON"] = [=[|cffffff00左鍵:|r 开关掷骰视窗 
 |cffffff00右键:|r 设定选项]=]
 L["TIP_PLH_USERS"] = "PLH使用者："
 L["TIP_VOTES"] = "表決來自:"
 
 -- Options - Home
-L["OPT_ACTIONS_WINDOW"] = "显示动作视窗"
-L["OPT_ACTIONS_WINDOW_DESC"] = "当有处理中的动作时显示动作窗口，例如，当你赢得一件物品但还需要交易某人才能得到它。"
+L["OPT_ACTIONS_WINDOW"] = "显示操作窗口"
+L["OPT_ACTIONS_WINDOW_DESC"] = "有处理中的操作时显示操作窗口，例如，当你赢得一件物品但还需要交易某人才能得到它。"
 L["OPT_ACTIONS_WINDOW_MOVE"] = "移动"
-L["OPT_ACTIONS_WINDOW_MOVE_DESC"] = "移动动作窗口到一旁。"
+L["OPT_ACTIONS_WINDOW_MOVE_DESC"] = "移动操作窗口到一旁。"
 L["OPT_ALLOW_DISENCHANT"] = "允许“分解”性竞骰。"
 L["OPT_ALLOW_DISENCHANT_DESC"] = "允许其他人对你所提供的拥有物品申请“分解”性竞骰。"
 L["OPT_AUTHOR"] = "|cffffff00作者:|r Shrugal (EU-Mal'Ganis)"
 L["OPT_AWARD_SELF"] = "自行选择你的物品的获胜者"
 L["OPT_AWARD_SELF_DESC"] = "自行选择谁该得到你的战利品，而非让插件随机选择，当你是拾取分配者时，始终启用此功能。"
-L["OPT_BID_PUBLIC"] = "公开竞标"
-L["OPT_BID_PUBLIC_DESC"] = "你掷骰的竞标是公开的，所有使用此插件的人都可以看见。"
+L["OPT_BID_PUBLIC"] = "公开竞骰"
+L["OPT_BID_PUBLIC_DESC"] = "你掷骰的竞骰是公开的，所有使用此插件的人都可以看见。"
 L["OPT_CHILL_MODE"] = "免打扰模式"
 L["OPT_CHILL_MODE_DESC"] = [=[开启免打扰模式的目的是为了不花费更多的时间用于协商战利品的分配。 如果启用它，以下内容将会更改：
 
@@ -183,6 +183,7 @@ L["OPT_DONT_SHARE"] = "不分享战利品"
 L["OPT_DONT_SHARE_DESC"] = "不去ROLL别人的战利品但也不分享自己的。此插件将会阻挡对你战利品的请求(如果启用的话)，但你仍可以成为分装者以及战利品议会成员。"
 L["OPT_ENABLE"] = "启用"
 L["OPT_ENABLE_DESC"] = "启用或停用此插件"
+L["OPT_ENABLE_MODULE_DESC"] = "启用或禁用此模块"
 L["OPT_ACTIVE_GROUPS"] = "按照小队类型激活"
 L["OPT_ACTIVE_GROUPS_DESC"] = [=[仅当你在此队伍中时才激活。
 
@@ -196,7 +197,7 @@ L["OPT_ILVL_THRESHOLD_RINGS"] = "戒指双阈值"
 L["OPT_ILVL_THRESHOLD_RINGS_DESC"] = "戒指应该是正常阈值的两倍，因为由于缺少主要统计数据，它们的值可能会有很大差异."
 L["OPT_INFO"] = "资讯"
 L["OPT_INFO_DESC"] = "关于此插件的一些资讯。"
-L["OPT_ITEM_FILTER"] = "物品过滤"
+L["OPT_ITEM_FILTER"] = "物品筛选"
 L["OPT_ITEM_FILTER_DESC"] = "更改你想要掷骰的物品。"
 L["OPT_MINIMAP_ICON"] = "显示小地图图标"
 L["OPT_MINIMAP_ICON_DESC"] = "显示或隐藏小地图图标"
@@ -257,8 +258,8 @@ L["OPT_MASTERLOOT_RULES_AUTO_AWARD_TIMEOUT"] = "自动分配时间(基本)"
 L["OPT_MASTERLOOT_RULES_AUTO_AWARD_TIMEOUT_DESC"] = "在自动分配战利品之前等待的基准时间，所以你有时间投票表决并可能自己决定。"
 L["OPT_MASTERLOOT_RULES_AUTO_AWARD_TIMEOUT_PER_ITEM"] = "自动分配时间(每项物品)"
 L["OPT_MASTERLOOT_RULES_AUTO_AWARD_TIMEOUT_PER_ITEM_DESC"] = "将每个掉落的物品都加入到基本自动分配时间。"
-L["OPT_MASTERLOOT_RULES_BID_PUBLIC"] = "公开竞标"
-L["OPT_MASTERLOOT_RULES_BID_PUBLIC_DESC"] = "你可以公开竞标，这样每个人都可以看到谁出价。"
+L["OPT_MASTERLOOT_RULES_BID_PUBLIC"] = "公开竞骰"
+L["OPT_MASTERLOOT_RULES_BID_PUBLIC_DESC"] = "你可以公开竞骰，这样每个人都可以看到谁掷骰。"
 L["OPT_MASTERLOOT_RULES_DESC"] = "当你是分装者时，这些选项适用于每个人。"
 L["OPT_MASTERLOOT_RULES_ALLOW_DISENCHANT_DESC"] = "允许队伍成员竞骰物品“分解”。"
 L["OPT_MASTERLOOT_RULES_DISENCHANTER"] = "分解者"
@@ -289,15 +290,15 @@ L["OPT_CUSTOM_MESSAGES_LOCALIZED"] = "服务器语言 (%s)"
 L["OPT_CUSTOM_MESSAGES_LOCALIZED_DESC"] = "当收讯人说你服务器的预设语言时(%s)使用这些讯息。"
 L["OPT_ECHO"] = "聊天资讯"
 L["OPT_ECHO_DEBUG"] = "侦错"
-L["OPT_ECHO_DESC"] = [=[你想要在聊天中显示多少插件的资讯？
+L["OPT_ECHO_DESC"] = [=[你想要在聊天中显示多少插件的信息？
 
-|cffffff00无:|r 聊天中无资讯。 
-|cffffff00错误:|r 只有错误讯息。 
-|cffffff00资讯:|r 你可能会采取行动的错误与有用讯息。 
-|cffffff00详细:|r 获取有关插件所做的任何事情的通知。
-|cffffff00侦错:|r 类似于详细，但有额外侦错讯息。]=]
+|cffffff00无:|r 聊天中无信息。 
+|cffffff00错误:|r 只有错误信息。 
+|cffffff00信息:|r 你操作中可能会出现的错误和有用的信息。 
+|cffffff00详细:|r 获取插件动作相关所有事件的通知。
+|cffffff00侦错:|r 详细相同，但有额外侦错信息。]=]
 L["OPT_ECHO_ERROR"] = "错误"
-L["OPT_ECHO_INFO"] = "资讯"
+L["OPT_ECHO_INFO"] = "信息"
 L["OPT_ECHO_NONE"] = "无"
 L["OPT_ECHO_VERBOSE"] = "详细"
 L["OPT_GROUPCHAT"] = "团队聊天频道"
@@ -316,7 +317,7 @@ L["OPT_MSG_BID"] = "询问战利品: 异色版 %d"
 L["OPT_MSG_BID_DESC"] = "1：物品连接"
 L["OPT_MSG_ROLL_ANSWER_AMBIGUOUS"] = "回答：发给我物品信息"
 L["OPT_MSG_ROLL_ANSWER_AMBIGUOUS_DESC"] = ""
-L["OPT_MSG_ROLL_ANSWER_BID"] = "回答：竞标已登记"
+L["OPT_MSG_ROLL_ANSWER_BID"] = "回答：竞骰已登记"
 L["OPT_MSG_ROLL_ANSWER_BID_DESC"] = "1：物品连接"
 L["OPT_MSG_ROLL_ANSWER_NO_OTHER"] = "回答：我已经给了別人"
 L["OPT_MSG_ROLL_ANSWER_NO_OTHER_DESC"] = ""
@@ -395,9 +396,13 @@ L["MASTERLOOTER_OTHER"] = "%s 现在负责分装。"
 L["MASTERLOOTER_SELF"] = "你现在负责分装。"
 L["ROLL_AWARDED"] = "已分配"
 L["ROLL_AWARDING"] = "分配中"
+L["ROLL_AWARD_VOTES"] = "表决结果"
+L["ROLL_AWARD_BIDS"] = "竞骰"
+L["ROLL_AWARD_ROLLS"] = "掷骰结果"
+L["ROLL_AWARD_RANDOM"] = "随机"
 L["ROLL_CANCEL"] = "已取消ROLL由 %2$s 提供的 %1$s。"
 L["ROLL_END"] = "由 %2$s 提供的 %1$s ROLL结束。"
-L["ROLL_IGNORING_BID"] = "已忽略 %s 对 %s 的竞标，因为之前已经聊过了 -> 竞标：%s 或 %s。"
+L["ROLL_IGNORING_BID"] = "已忽略 %s 对 %s 的竞标，因为之前已经聊过了 -> 竞骰：%s 或 %s。"
 L["ROLL_LIST_EMPTY"] = "启用的ROLL会显示在此"
 L["ROLL_START"] = "开始ROLL由 %2$s 提供的 %1$s。"
 L["ROLL_STATUS_0"] = "处理中"
@@ -405,13 +410,29 @@ L["ROLL_STATUS_1"] = "执行中"
 L["ROLL_STATUS_-1"] = "已取消"
 L["ROLL_STATUS_2"] = "完成"
 L["ROLL_TRADED"] = "已交易"
-L["ROLL_WHISPER_SUPPRESSED"] = "%s 对 %s竞标 -> %s / %s。"
+L["ROLL_WHISPER_SUPPRESSED"] = "%s 对 %s竞骰 -> %s / %s。"
 L["ROLL_WINNER_MASTERLOOT"] = "%1$s 已经赢得由 %3$s 提供的 %2$s。"
 L["ROLL_WINNER_OTHER"] = "%s 赢得你提供的 %s -> %s。"
 L["ROLL_WINNER_OWN"] = "你赢得自己的 %s。"
 L["ROLL_WINNER_SELF"] = "你赢得由 %2$s 提供的 %1$s -> %s。"
 L["TRADE_CANCEL"] = "与 %s 取消交易。"
 L["TRADE_START"] = "与 %s 开始交易。"
+
+-- Plugins - EPGP
+L["EPGP"] = "EPGP（贡献点/装备点）制度"
+L["EPGP_EP"] = "EP（贡献点）"
+L["EPGP_GP"] = "GP（装备点）"
+L["EPGP_PR"] = "拾取优先(PR)"
+L["EPGP_OPT_DESC"] = "当装备分配模式处于活动状态时，使用EPGP进行战利品分发。 包括按玩家的PR值显示和排序，以及在获得战利品时记入GP。"
+L["EPGP_OPT_WARNING"] = "|cffff0000WARNING:|r 在公会中您没有（EPGP记录）管理员的权限，因此当您是装备分配者时，EPGP将无法将GP点值归入装备战利品。"
+L["EPGP_OPT_ONLY_GUILD_RAID"] = "仅限于公会里的团队活动"
+L["EPGP_OPT_ONLY_GUILD_RAID_DESC"] = "仅在团队活动中激活且该队伍中的人至少％d %%来自您的公会。"
+L["EPGP_OPT_AWARD_BEFORE"] = "赋予奖励优先权"
+L["EPGP_OPT_AWARD_BEFORE_DESC"] = "选择默认奖励方法之前，在确定拾取者时，应该结合EPGP PR值。"
+L["EPGP_OPT_BID_WEIGHTS"] = "GP（装备点）竞骰权重"
+L["EPGP_OPT_BID_WEIGHTS_DESC"] = "掷骰中竞骰时分配以不同的权重。物品获取者得到的GP乘以该值，也可以是 零 或 负数。"
+L["EPGP_CREDIT_GP"] = "将％d GP计入％s的<％s>。（装备点）"
+L["EPGP_ERROR_CREDIT_GP_FAILED"] = "将％d GP归入<％s>的％s 失败！"
 
 -- Globals
 LOOT_ROLL_INELIGIBLE_REASONPLR_NO_ADDON = "物品的提供者并没有使用persolootroll插件。"
@@ -428,3 +449,4 @@ L["ROLL_BID_1"] = NEED
 L["ROLL_BID_2"] = GREED
 L["ROLL_BID_3"] = ROLL_DISENCHANT
 L["ROLL_BID_4"] = PASS
+L[""] = ""
